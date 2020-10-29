@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
-   name: {
+    name: {
        type:String,
        maxlength:50
-   },
+    },
     email: {
         type:String,
         trim:true,
@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
         minlength: 5
     },
     lastname: {
-        type:Stirng,
+        type:String,
         maxlength: 50
     },
     role: { // admin 유저랑 보통 유저 구분하기 위함
