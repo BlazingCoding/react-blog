@@ -53,23 +53,26 @@ app.post('/api/user/login', (req, res) => {
         });
 
         //comparePassword
-        user.comparePassword(req.body.password, (err, isMatch)=>{
-            if(!isMatch){
-                return res.json({
-                    loginSuccess: false, message: "wrong password"
-                })
-            }
-        })
+        user.comparePassword(req.body.password, (err, isMatch) => {
+            if (!isMatch)
+                return res.json({ loginSuccess: false, message: "Wrong password" });
 
-        //generateToken
-        user.generateToken((err, user) =>{
-            if(err) return res.status(400).send(err);
-            res.cookie("intel_auth", user.token)
-                .status(200)
-                .json({
-                    loginSuccess: true
-                })
-        })
+            //generateToken
+            //비밀번호까지 동일하다면 토큰을 생성하기.
+            user.generateToken((err, user) => {
+                if (err) return res.status(400).send(err); //400이면에러가있으면 err를전달해라는의미
+                //토큰을 저장한다. 어디에 ? 쿠키 or 로컬스토리지
+                res.cookie("intel_auth", user.token)
+                    .status(200)
+                    .json({
+                        loginSuccess: true
+                    });
+            });
+        });
+
+
+
+
     })
 }) // /api/user/login
 
